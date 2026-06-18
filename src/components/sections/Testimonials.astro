@@ -1,0 +1,108 @@
+---
+interface Testimonial {
+  id: string;
+  name: string;
+  location: string;
+  content: string;
+  rating: number;
+  date: string;
+}
+
+const testimonials: Testimonial[] = [
+  {
+    id: '1',
+    name: 'Nguyễn Minh Anh',
+    location: 'TP. Hồ Chí Minh',
+    content: 'Mình mua hoa len tặng bạn thân và bạn mình cứ hỏi mua ở đâu mà đẹp vậy. Sản phẩm làm kỹ, đóng gói cẩn thận, giao hàng nhanh. Sẽ ủng hộ dài dài.',
+    rating: 5,
+    date: 'Tháng 3, 2025'
+  },
+  {
+    id: '2',
+    name: 'Trần Bảo Châu',
+    location: 'Hà Nội',
+    content: 'Thú bông len mềm mại, màu sắc đúng như hình. Con mình ôm suốt không chịu rời. Rất yên tâm về chất lượng vì biết là handmade.',
+    rating: 5,
+    date: 'Tháng 2, 2025'
+  },
+  {
+    id: '3',
+    name: 'Lê Thanh Hà',
+    location: 'Đà Nẵng',
+    content: 'Đặt móc khóa tùy chỉnh theo màu yêu thích, shop tư vấn rất nhiệt tình và giao đúng hẹn. Chất lượng vượt mong đợi.',
+    rating: 5,
+    date: 'Tháng 1, 2025'
+  },
+];
+
+function renderStars(rating: number): string {
+  return '★'.repeat(rating);
+}
+---
+
+<section class="py-[60px] md:py-[100px]" style="background: linear-gradient(135deg, #CFECF3 0%, #F9B2D7 50%, #DAF9DE 100%);">
+  <div class="w-full max-w-[1280px] mx-auto px-6 md:px-10 lg:px-16">
+    <!-- Section Header -->
+    <div class="text-center">
+      <!-- Label với decorative - nổi bật hơn -->
+      <div class="inline-flex items-center gap-3 mb-4 px-6 py-2.5 rounded-full" style="background: linear-gradient(135deg, #F9B2D7 0%, #D4869E 100%); box-shadow: 0 4px 15px rgba(212, 134, 158, 0.3);">
+        <span class="font-body text-sm md:text-base tracking-[0.15em] uppercase font-semibold text-white drop-shadow-sm">
+          ✦ Khách hàng nói gì ✦
+        </span>
+      </div>
+      <h2 class="font-heading font-[500] italic leading-[1.3] mt-2" style="font-size: clamp(2rem, 3.5vw, 2.8rem); color: #2C3E3F;">
+        Niềm tin được đan từng ngày.
+      </h2>
+    </div>
+
+    <!-- Testimonial Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-14">
+      {testimonials.map((testimonial) => (
+        <article
+          class="p-8 md:p-10 rounded-[var(--radius-md)] border bg-white/80 backdrop-blur-sm"
+          style="border-color: #F9B2D7; box-shadow: 0 4px 20px rgba(249, 178, 215, 0.15);"
+        >
+          <!-- Quote Mark -->
+          <span class="block font-heading text-[4rem] leading-none mb-3" style="color: #F9B2D7;">
+            "
+          </span>
+
+          <!-- Quote Text -->
+          <p class="font-body text-base md:text-[1.05rem] leading-[1.85] italic" style="color: #2C3E3F;">
+            {testimonial.content}
+          </p>
+
+          <!-- Divider -->
+          <div class="flex items-center gap-3 my-6">
+            <span class="block w-8 h-px" style="background-color: #D4869E;"></span>
+            <span class="block w-2 h-2 rounded-full" style="background-color: #F9B2D7;"></span>
+            <span class="block w-8 h-px" style="background-color: #D4869E;"></span>
+          </div>
+
+          <!-- Reviewer Info -->
+          <div>
+            <span class="block font-heading text-[1.05rem] font-[500]" style="color: #D4869E;">
+              {testimonial.name}
+            </span>
+            <span class="block font-body text-[0.85rem] mt-1.5" style="color: #6B8A8C;">
+              {testimonial.location} · {testimonial.date}
+            </span>
+          </div>
+
+          <!-- Rating -->
+          <div class="mt-2" style="color: #F9B2D7; font-size: 1rem;">
+            {renderStars(testimonial.rating)}
+          </div>
+        </article>
+      ))}
+    </div>
+
+    <!-- Bottom CTA -->
+    <div class="text-center mt-14">
+      <p class="font-body text-base mb-5" style="color: #3D7A7F;">
+        Tham gia cùng hàng trăm khách hàng hài lòng
+      </p>
+      <a href="/tiemlennhadev/products" class="btn-primary">Xem Sản Phẩm</a>
+    </div>
+  </div>
+</section>

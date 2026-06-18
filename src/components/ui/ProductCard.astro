@@ -1,0 +1,201 @@
+---
+import { type Product } from '../../types/index';
+import { CATEGORY_LABELS } from '../../data/products';
+
+interface Props {
+  product: Product;
+}
+
+const { product } = Astro.props;
+
+const categoryBgColors: Record<Product['category'], string> = {
+  flower: 'var(--color-primary)',
+  keychain: 'var(--color-accent)',
+  animal: '#DDE8E8',
+  other: 'rgba(202,229,230,0.6)',
+};
+---
+
+<a
+  href={`/tiemlennhadev/products/${product.id}`}
+  class="product-card card-base"
+>
+  <div class="product-card__image">
+    <!-- Background / Image -->
+    {product.images && product.images.length > 0 ? (
+      <img
+        src={product.images[0]}
+        alt={product.name}
+        class="product-image"
+        loading="lazy"
+      />
+    ) : (
+      <div style={`background-color: ${categoryBgColors[product.category]};`}>
+        <span class="placeholder-text">{CATEGORY_LABELS[product.category]}</span>
+      </div>
+    )}
+
+    <!-- Badge -->
+    {product.badge && (
+      <span class="badge">{product.badge}</span>
+    )}
+
+    <!-- Out of stock overlay -->
+    {!product.inStock && (
+      <div class="out-of-stock-overlay">
+        <span>Hết hàng</span>
+      </div>
+    )}
+  </div>
+
+  <div class="product-card__content">
+    <span class="product-card__category">{CATEGORY_LABELS[product.category]}</span>
+    <h3 class="product-card__name">{product.name}</h3>
+    <p class="product-card__price">{product.price.toLocaleString('vi-VN')}₫</p>
+
+    <div class="product-card__bottom">
+      <div class="stock-status">
+        <span
+          class="stock-dot"
+          style={`background-color: ${product.inStock ? '#6BAE75' : 'var(--color-text-muted)'};`}
+        ></span>
+        <span>{product.inStock ? 'Còn hàng' : 'Hết hàng'}</span>
+      </div>
+      <span class="view-detail underline-hover">Xem chi tiết</span>
+    </div>
+  </div>
+</a>
+
+<style>
+  .product-card {
+    display: block;
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .product-card__image {
+    position: relative;
+    overflow: hidden;
+    aspect-ratio: 4/5;
+  }
+
+  .product-card__image > div,
+  .product-card__image > img {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .product-card__image > img {
+    width: 100%;
+    object-fit: cover;
+  }
+
+  .placeholder-text {
+    font-family: var(--font-heading);
+    font-style: italic;
+    color: var(--color-primary-dark);
+    opacity: 0.35;
+    font-size: 1rem;
+  }
+
+  .product-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .badge {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    background-color: var(--color-primary-dark);
+    color: #FAFAF8;
+    font-family: var(--font-body);
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    padding: 4px 10px;
+    border-radius: var(--radius-sm);
+    z-index: 2;
+  }
+
+  .out-of-stock-overlay {
+    position: absolute;
+    inset: 0;
+    background-color: rgba(250,250,248,0.75);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 3;
+  }
+
+  .out-of-stock-overlay span {
+    font-family: var(--font-heading);
+    font-style: italic;
+    font-size: 1rem;
+    color: var(--color-text-muted);
+  }
+
+  .product-card__content {
+    padding: 14px 16px 16px;
+  }
+
+  .product-card__category {
+    display: block;
+    font-family: var(--font-body);
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--color-text-muted);
+  }
+
+  .product-card__name {
+    font-family: var(--font-heading);
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: var(--color-text);
+    margin-top: 4px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .product-card__price {
+    font-family: var(--font-body);
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--color-primary-dark);
+    margin-top: 10px;
+  }
+
+  .product-card__bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 14px;
+  }
+
+  .stock-status {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-family: var(--font-body);
+    font-size: 0.7rem;
+    color: var(--color-text-muted);
+  }
+
+  .stock-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+  }
+
+  .view-detail {
+    font-family: var(--font-body);
+    font-size: 0.75rem;
+    color: var(--color-text-muted);
+  }
+</style>

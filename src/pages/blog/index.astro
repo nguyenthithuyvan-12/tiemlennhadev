@@ -1,0 +1,242 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+
+const posts = await getCollection('blog');
+posts.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+
+const pageTitle = 'Blog';
+const pageDescription = 'Bài viết chia sẻ về móc len, hướng dẫn kỹ thuật, và ý tưởng quà tặng handmade từ Tiệm Len Nhà Dev.';
+
+const featuredPost = posts[0];
+const otherPosts = posts.slice(1);
+
+function formatDate(date: Date): string {
+  return date.toLocaleDateString('vi-VN', { year: 'numeric', month: 'long', day: 'numeric' });
+}
+---
+
+<BaseLayout title={pageTitle} description={pageDescription}>
+  <!-- PAGE HERO BAND -->
+  <section style="background: linear-gradient(180deg, #F9B2D7 0%, #CFECF3 50%, #F6FFDC 100%); padding: 80px 24px; position: relative; overflow: hidden;">
+    <!-- Decorative circles -->
+    <div class="absolute w-40 h-40 rounded-full opacity-30" style="background: radial-gradient(circle, #DAF9DE 0%, transparent 70%); top: -20px; right: 10%;"></div>
+    <div class="absolute w-60 h-60 rounded-full opacity-25" style="background: radial-gradient(circle, #CFECF3 0%, transparent 70%); bottom: -30px; left: 5%;"></div>
+    <div class="absolute w-32 h-32 rounded-full opacity-20" style="background: radial-gradient(circle, #F9B2D7 0%, transparent 70%); top: 20%; left: 15%;"></div>
+    
+    <div style="max-width: 800px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; text-align: center; position: relative; z-index: 1;">
+      <!-- Pill badge -->
+      <div class="inline-flex items-center gap-2 px-6 py-2.5 rounded-full mb-8" style="background: white; box-shadow: 0 4px 20px rgba(249,178,215,0.4);">
+        <span class="block w-2.5 h-2.5 rounded-full" style="background: #CFECF3;"></span>
+        <span class="font-body text-sm font-bold tracking-wider uppercase" style="color: #2C3E3F;">Chia sẻ & Hướng dẫn</span>
+        <span class="block w-2.5 h-2.5 rounded-full" style="background: #CFECF3;"></span>
+      </div>
+      
+      <!-- Main title -->
+      <h1 class="font-heading font-[500] leading-[1.2] m-0 mb-6" style="font-size: clamp(2.5rem, 5vw, 3.5rem); font-style: italic; letter-spacing: -0.02em;">
+        <span style="background: linear-gradient(135deg, #E8487A 0%, #D4869E 50%, #3D7A7F 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">
+          Blog của Tiệm Len
+        </span>
+      </h1>
+      
+      <!-- Decorative line -->
+      <div class="flex items-center justify-center gap-4 mb-6">
+        <div class="h-[2px] w-16 rounded-full" style="background: linear-gradient(90deg, transparent, #E8487A);"></div>
+        <span style="color: #D4869E; font-size: 1.1rem;">♥</span>
+        <div class="h-[2px] w-16 rounded-full" style="background: linear-gradient(90deg, #3D7A7F, transparent);"></div>
+      </div>
+      
+      <!-- Description -->
+      <p class="font-body text-lg font-light leading-[1.8] max-w-[600px]" style="color: #4A6B6E;">
+        Kỹ thuật móc, ý tưởng quà tặng, và những câu chuyện từ xưởng len nhỏ của chúng tôi.
+      </p>
+    </div>
+  </section>
+
+  {posts.length > 0 ? (
+    <>
+      <!-- FEATURED POST -->
+      <section style="background: linear-gradient(180deg, #FFFFFF 0%, #FFF5F8 100%); padding: 80px 24px;">
+        <div style="max-width: 1100px; margin: 0 auto;">
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+            <!-- Image -->
+            <div
+              class="aspect-video rounded-3xl flex items-center justify-center overflow-hidden"
+              style="background: linear-gradient(135deg, #CFECF3 0%, #DAF9DE 100%);"
+            >
+              {featuredPost.data.thumbnail ? (
+                <img
+                  src={featuredPost.data.thumbnail}
+                  alt={featuredPost.data.title}
+                  style="
+                    width: 100%;
+                    height: 100%;
+                    object-fit: cover;
+                    display: block;
+                    border-radius: 0.75rem;
+                  "
+                  loading="eager"
+                />
+              ) : (
+                <div style="
+                  width: 100%;
+                  aspect-ratio: 16/9;
+                  background: #CFECF3;
+                  border-radius: 0.75rem;
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                  font-family: var(--font-heading);
+                  font-style: italic;
+                  color: #3D7A7F;
+                  opacity: 0.5;
+                ">(Ảnh bìa bài viết)</div>
+              )}
+            </div>
+
+            <!-- Post Info -->
+            <div>
+              <!-- Tags -->
+              <div class="flex flex-wrap gap-2 mb-4">
+                {featuredPost.data.tags.slice(0, 3).map((tag) => (
+                  <span class="inline-block font-body text-xs uppercase tracking-wider px-4 py-1.5 rounded-full" style="background: linear-gradient(135deg, #F6FFDC 0%, #DAF9DE 100%); color: #2C3E3F;">
+                    {tag}
+                  </span>
+                ))}
+              </div>
+
+              <!-- Title -->
+              <h2 class="font-heading font-[500] leading-[1.3]" style="font-size: clamp(1.6rem, 3vw, 2.2rem); color: #2C3E3F;">
+                {featuredPost.data.title}
+              </h2>
+
+              <!-- Description -->
+              <p class="font-body text-base font-light leading-[1.8] mt-4" style="color: #5A7A7D;">
+                {featuredPost.data.description}
+              </p>
+
+              <!-- Meta -->
+              <p class="font-body text-sm mt-5" style="color: #7A9A9C;">
+                {featuredPost.data.author} · {formatDate(featuredPost.data.pubDate)}
+              </p>
+
+              <!-- CTA Button -->
+              <a 
+                href={`/tiemlennhadev/blog/${featuredPost.slug}`} 
+                class="inline-flex items-center gap-3 mt-6 px-8 py-4 rounded-full font-body font-semibold text-base transition-all duration-300 hover:scale-105"
+                style="background: linear-gradient(135deg, #F9B2D7 0%, #E8487A 100%); color: white; box-shadow: 0 4px 20px rgba(232,72,122,0.35);"
+              >
+                Đọc bài viết
+                <span style="font-size: 1.2rem;">→</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- DIVIDER -->
+      {otherPosts.length > 0 && (
+        <section style="background: #FFFFFF; padding: 0 24px;">
+          <div style="max-width: 800px; margin: 0 auto; display: flex; align-items: center; gap: 16px;">
+            <div class="flex-1 h-[2px] rounded-full" style="background: linear-gradient(90deg, transparent, #F9B2D7);"></div>
+            <div class="inline-flex items-center gap-2 px-5 py-2 rounded-full" style="background: linear-gradient(135deg, #F6FFDC 0%, #CFECF3 100%);">
+              <span class="font-body text-sm font-bold uppercase" style="color: #2C3E3F;">Bài viết khác</span>
+            </div>
+            <div class="flex-1 h-[2px] rounded-full" style="background: linear-gradient(90deg, #CFECF3, transparent);"></div>
+          </div>
+        </section>
+      )}
+
+      <!-- POST GRID -->
+      {otherPosts.length > 0 && (
+        <section style="background: linear-gradient(180deg, #FFFFFF 0%, #F6FFDC 100%); padding: 60px 24px;">
+          <div style="max-width: 1100px; margin: 0 auto;">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-7">
+              {otherPosts.map((post, index) => (
+                <article style="background: white; border-radius: 1.5rem; overflow: hidden; box-shadow: 0 8px 30px rgba(0,0,0,0.08); border: 1px solid rgba(0,0,0,0.04); transition: transform 300ms ease, box-shadow 300ms ease; position: relative;" onmouseover="this.style.transform='translateY(-8px)'; this.style.boxShadow='0 16px 40px rgba(0,0,0,0.12)';" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 8px 30px rgba(0,0,0,0.08)';">
+                    <!-- Coming Soon Badge -->
+                  <div class="absolute top-4 right-4 z-10">
+                    <span class="inline-block px-4 py-2 rounded-full font-body text-sm font-bold uppercase tracking-wider" style="background: linear-gradient(135deg, #E8487A 0%, #D4869E 100%); color: white; box-shadow: 0 4px 15px rgba(232,72,122,0.4);">
+                      Coming soon
+                    </span>
+                  </div>
+                  
+                  <div>
+                    <!-- Image -->
+                    <div
+                      class="aspect-video flex items-center justify-center overflow-hidden"
+                      style={`background: linear-gradient(135deg, ${index % 2 === 0 ? '#F9B2D7' : '#CFECF3'} 0%, ${index % 2 === 0 ? '#CFECF3' : '#DAF9DE'} 100%); opacity: 0.7; position: relative;`}
+                    >
+                      {post.data.thumbnail ? (
+                        <img
+                          src={post.data.thumbnail}
+                          alt={post.data.title}
+                          style="
+                            width: 100%;
+                            height: 100%;
+                            object-fit: cover;
+                            display: block;
+                          "
+                          loading="lazy"
+                        />
+                      ) : (
+                        <div style="
+                          width: 100%;
+                          aspect-ratio: 16/9;
+                          background: #F9B2D7;
+                        "></div>
+                      )}
+                    </div>
+
+                    <!-- Content -->
+                    <div class="p-6">
+                      <!-- Tags -->
+                      <div class="flex flex-wrap gap-2 mb-3">
+                        {post.data.tags.slice(0, 2).map((tag) => (
+                          <span class="inline-block font-body text-xs uppercase tracking-wider px-3 py-1 rounded-full" style="background: #F6FFDC; color: #2C3E3F;">
+                            {tag}
+                          </span>
+                        ))}
+                      </div>
+
+                      <!-- Title -->
+                      <h3 class="font-heading font-[500] leading-[1.4]" style="font-size: 1.15rem; color: #2C3E3F; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; margin: 0;">
+                        {post.data.title}
+                      </h3>
+
+                      <!-- Description -->
+                      <p class="font-body text-sm font-light leading-[1.7] mt-2" style="color: #5A7A7D; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;">
+                        {post.data.description}
+                      </p>
+
+                      <!-- Bottom row -->
+                      <div class="flex justify-between items-center mt-5">
+                        <span class="font-body text-xs" style="color: #7A9A9C;">
+                          {formatDate(post.data.pubDate)}
+                        </span>
+                        <span 
+                          class="inline-flex items-center gap-2 font-body text-sm font-semibold"
+                          style="color: #B0C4C6;"
+                        >
+                          Sắp ra mắt
+                          <span>⭐</span>
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </article>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+    </>
+  ) : (
+    <!-- NO POSTS STATE -->
+    <section class="py-20 text-center" style="background-color: var(--color-background);">
+      <p class="font-heading italic" style="color: var(--color-text-muted); font-size: 1.2rem;">
+        Chưa có bài viết nào. Hãy quay lại sau.
+      </p>
+    </section>
+  )}
+</BaseLayout>

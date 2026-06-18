@@ -1,0 +1,84 @@
+---
+const navLinks = [
+  { href: '/tiemlennhadev/', label: 'Trang Chủ' },
+  { href: '/tiemlennhadev/products', label: 'Sản Phẩm' },
+  { href: '/tiemlennhadev/blog', label: 'Blog' },
+  { href: '/tiemlennhadev/courses', label: 'Khóa Học' },
+  { href: '/tiemlennhadev/charts', label: 'Thư Viện' },
+];
+---
+
+<footer style="background: linear-gradient(135deg, #F9B2D7 0%, #CFECF3 50%, #DAF9DE 100%);">
+  <div class="w-full max-w-[1280px] mx-auto px-6 md:px-10 lg:px-16 py-10 md:py-12">
+    <div class="grid grid-cols-1 md:grid-cols-[1.5fr_1fr_1fr] gap-8 md:gap-10">
+      <!-- Column 1: Brand -->
+      <div>
+        <!-- Logo -->
+        <a href="/tiemlennhadev/" class="flex flex-col leading-none mb-4">
+          <span class="font-heading text-xl font-bold tracking-wide" style="color: #2C3E3F;">
+            Tiệm Len
+          </span>
+          <span class="font-heading text-base font-semibold tracking-[0.2em] uppercase mt-0.5" style="color: #D4869E;">
+            Nhà Dev
+          </span>
+        </a>
+        <p class="font-body text-[1.05rem] leading-relaxed max-w-[320px]" style="color: #2C3E3F;">
+          Handmade với tình yêu. Mỗi sản phẩm là một câu chuyện được đan từ từng sợi len.
+        </p>
+      </div>
+
+      <!-- Column 2: Navigation -->
+      <div>
+        <span class="block text-[0.95rem] font-semibold tracking-wide uppercase mb-4" style="color: #D4869E;">Khám phá</span>
+        <nav class="flex flex-col gap-2.5">
+          {navLinks.map((link) => (
+            <a
+              href={link.href}
+              class="font-body text-[1rem] transition-colors duration-base hover:translate-x-1 inline-block"
+              style="color: #2C3E3F;"
+            >
+              {link.label}
+            </a>
+          ))}
+        </nav>
+      </div>
+
+      <!-- Column 3: Contact -->
+      <div>
+        <span class="block text-[0.95rem] font-semibold tracking-wide uppercase mb-4" style="color: #D4869E;">Kết nối</span>
+        <nav class="flex flex-col gap-2.5">
+          <a href="#" class="font-body text-[1rem] transition-colors duration-base hover:translate-x-1 inline-block" style="color: #2C3E3F;">Zalo</a>
+          <a href="#" class="font-body text-[1rem] transition-colors duration-base hover:translate-x-1 inline-block" style="color: #2C3E3F;">Messenger</a>
+          <a href="#" class="font-body text-[1rem] transition-colors duration-base hover:translate-x-1 inline-block" style="color: #2C3E3F;">Email</a>
+        </nav>
+      </div>
+    </div>
+
+    <!-- Bottom Bar - Compact & Cute -->
+    <div class="mt-8 pt-4 border-t flex flex-col items-center gap-2" style="border-color: rgba(212, 134, 158, 0.3);">
+      <!-- Decorative Hearts -->
+      <div class="flex items-center gap-2 text-sm">
+        <span style="color: #F9B2D7;">♥</span>
+        <span style="color: #D4869E;">♥</span>
+        <span style="color: #F9B2D7;">♥</span>
+      </div>
+      
+      <!-- Handmade & Copyright -->
+      <div class="flex items-center gap-2 flex-wrap justify-center text-center">
+        <span class="font-body text-[0.8rem]" style="color: #3D7A7F;">
+          © 2026 Tiệm Len Nhà Dev
+        </span>
+        <span style="color: #D4869E;">•</span>
+        <span class="font-body text-[0.8rem]" style="color: #3D7A7F;">
+          Handmade with love in <span style="color: #DA251D;">Vietnam</span>
+        </span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<style>
+  footer a:hover {
+    color: #D4869E !important;
+  }
+</style>

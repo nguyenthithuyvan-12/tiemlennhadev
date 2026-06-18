@@ -1,0 +1,183 @@
+---
+interface GalleryItem {
+  id: string;
+  title: string;
+  category: string;
+  image?: string;
+}
+
+const galleryItems: GalleryItem[] = [
+  { id: '1', title: 'Hoa Hướng Dương', category: 'Hoa', image: '/tiemlennhadev/images/hoa-huonghuong1.jpg' },
+  { id: '2', title: 'Thỏ miffy', category: 'Thú', image: '/tiemlennhadev/images/tho-miffy.jpg' },
+  { id: '3', title: '1 Sản Phẩm Hoa Bán Chạy', category: 'Hoa', image: '/tiemlennhadev/images/hoa-honhop1.jpg' },
+  { id: '4', title: 'Hoa Mẫu Đơn Len', category: 'Hoa', image: '/tiemlennhadev/images/hoa-maudon2.jpg' },
+  { id: '5', title: 'Hoa Hồng Ghép Cánh', category: 'Hoa', image: '/tiemlennhadev/images/hoa-hongghepcanh.jpg' },
+  { id: '6', title: 'Tulip cánh bèo', category: 'Hoa', image: '/tiemlennhadev/images/hoa-tulip.jpg' },
+];
+
+const cellColors = [
+  '#CFECF3',
+  '#DAF9DE',
+  '#F9B2D7',
+  '#CFECF3',
+  '#DAF9DE',
+  '#F9B2D7',
+];
+---
+
+<section class="pb-0" style="background: linear-gradient(180deg, #F6FFDC 0%, #FFFFFF 100%);">
+  <div class="w-full max-w-[1280px] mx-auto px-6 md:px-10 lg:px-16">
+    <!-- Section Header -->
+    <div class="text-center mb-14 pt-20">
+      <!-- Label với decorative -->
+      <div class="flex items-center justify-center gap-3 mb-3">
+        <span class="block w-8 h-[2px]" style="background: linear-gradient(90deg, #D4869E, #F9B2D7);"></span>
+        <span class="font-body text-sm md:text-base tracking-[0.2em] uppercase font-medium" style="color: #D4869E;">
+          ✦ Thư viện ảnh ✦
+        </span>
+        <span class="block w-8 h-[2px]" style="background: linear-gradient(90deg, #F9B2D7, #D4869E);"></span>
+      </div>
+      <h2 class="font-heading font-[500] italic leading-[1.3]" style="font-size: clamp(1.8rem, 3vw, 2.5rem); color: #2C3E3F;">
+        Xem thêm tác phẩm của chúng tôi.
+      </h2>
+    </div>
+  </div>
+
+  <!-- Gallery Grid - Full Width -->
+  <div class="grid grid-cols-2 md:grid-cols-3">
+    {galleryItems.map((item, index) => (
+      <div
+        class="gallery-cell aspect-square relative overflow-hidden cursor-pointer group"
+        style={`background-color: ${cellColors[index]};`}
+        data-index={index}
+        data-title={item.title}
+        data-category={item.category}
+      >
+        {/* Hiển thị ảnh nếu có */}
+        {item.image && (
+          <img
+            src={item.image}
+            alt={item.title}
+            class="absolute inset-0 w-full h-full object-cover"
+            loading="lazy"
+          />
+        )}
+        <!-- Overlay -->
+        <div
+          class="gallery-overlay absolute inset-0 flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-[var(--transition-slow)]"
+          style="background-color: rgba(61, 90, 91, 0.6);"
+        >
+          <span class="font-heading text-base italic" style="color: #FAFAF8;">
+            {item.title}
+          </span>
+          <span class="font-body text-[0.7rem] tracking-[0.15em] uppercase mt-1.5" style="color: rgba(250,250,248,0.7);">
+            {item.category}
+          </span>
+        </div>
+      </div>
+    ))}
+  </div>
+</section>
+
+<!-- Lightbox -->
+<div id="lightbox" class="fixed inset-0 z-[200] hidden items-center justify-center" style="background-color: rgba(44, 44, 44, 0.95);">
+  <div id="lightbox-content" class="max-w-[600px] w-[90%] text-center">
+    <!-- Placeholder Image -->
+    <div
+      class="aspect-[3/4] w-full flex items-center justify-center overflow-hidden"
+      style="background-color: var(--color-primary);"
+    >
+      <img
+        id="lightbox-image"
+        src=""
+        alt=""
+        class="max-w-full max-h-[70vh] object-contain hidden"
+      />
+      <div id="lightbox-placeholder">
+        <span id="lightbox-title" class="font-heading italic text-lg block" style="color: var(--color-primary-dark);"></span>
+        <span id="lightbox-category" class="font-body text-[0.75rem] tracking-[0.15em] uppercase block mt-2" style="color: var(--color-primary-dark); opacity: 0.7;"></span>
+      </div>
+    </div>
+
+    <!-- Close Button -->
+    <button
+      id="lightbox-close"
+      type="button"
+      class="block mx-auto mt-4 font-body text-[0.85rem] cursor-pointer"
+      style="color: rgba(250,250,248,0.7);"
+    >
+      Đóng
+    </button>
+  </div>
+</div>
+
+<script lang="ts">
+  const lightbox = document.getElementById('lightbox');
+  const lightboxTitle = document.getElementById('lightbox-title');
+  const lightboxCategory = document.getElementById('lightbox-category');
+  const lightboxImage = document.getElementById('lightbox-image') as HTMLImageElement;
+  const lightboxPlaceholder = document.getElementById('lightbox-placeholder');
+  const lightboxClose = document.getElementById('lightbox-close');
+  const galleryCells = document.querySelectorAll('.gallery-cell');
+
+  function showLightbox(index: number) {
+    const cell = galleryCells[index] as HTMLElement;
+    const title = cell?.dataset.title || '';
+    const category = cell?.dataset.category || '';
+
+    // Tìm ảnh từ thẻ img bên trong cell
+    const cellImg = cell?.querySelector('img');
+    const imageSrc = cellImg?.getAttribute('src') || '';
+
+    if (lightboxTitle) lightboxTitle.textContent = title;
+    if (lightboxCategory) lightboxCategory.textContent = category;
+
+    if (imageSrc) {
+      if (lightboxImage) {
+        lightboxImage.src = imageSrc;
+        lightboxImage.alt = title;
+        lightboxImage.classList.remove('hidden');
+      }
+      if (lightboxPlaceholder) lightboxPlaceholder.classList.add('hidden');
+    } else {
+      if (lightboxImage) {
+        lightboxImage.classList.add('hidden');
+        lightboxImage.src = '';
+      }
+      if (lightboxPlaceholder) lightboxPlaceholder.classList.remove('hidden');
+    }
+
+    if (lightbox) {
+      lightbox.style.display = 'flex';
+      document.body.style.overflow = 'hidden';
+    }
+  }
+
+  function hideLightbox() {
+    if (lightbox) {
+      lightbox.style.display = 'none';
+      document.body.style.overflow = '';
+    }
+  }
+
+  galleryCells.forEach((cell) => {
+    cell.addEventListener('click', () => {
+      const index = parseInt((cell as HTMLElement).dataset.index || '0', 10);
+      showLightbox(index);
+    });
+  });
+
+  lightboxClose?.addEventListener('click', hideLightbox);
+
+  lightbox?.addEventListener('click', (e) => {
+    if (e.target === lightbox) {
+      hideLightbox();
+    }
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      hideLightbox();
+    }
+  });
+</script>

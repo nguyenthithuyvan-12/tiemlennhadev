@@ -1,0 +1,282 @@
+---
+import PRODUCTS from '../../data/products';
+---
+
+<div id="search-modal" aria-modal="true" role="dialog" aria-label="Tim kiem san pham">
+  <!-- BACKDROP -->
+  <div id="search-backdrop"></div>
+
+  <!-- MODAL PANEL -->
+  <div id="search-panel">
+    <!-- HEADER ROW -->
+    <div id="search-header">
+      <span class="section-label" style="margin-bottom:0">Tim kiem</span>
+      <button id="search-close" aria-label="Dong tim kiem">
+        &times;
+      </button>
+    </div>
+
+    <!-- INPUT ROW -->
+    <div id="search-input-wrapper">
+      <input
+        type="text"
+        id="search-input"
+        placeholder="Nhap ten san pham..."
+        autocomplete="off"
+        autocorrect="off"
+        spellcheck="false"
+      />
+    </div>
+
+    <!-- RESULTS AREA -->
+    <div id="search-results">
+      <!-- Populated by JS -->
+    </div>
+
+    <!-- EMPTY STATE (hidden by default) -->
+    <div id="search-empty" style="display:none">
+      <p>Khong tim thay san pham phu hop.</p>
+      <p>Thu tu khoa khac hoac <a href="/tiemlennhadev/products">xem tat ca san pham</a>.</p>
+    </div>
+
+    <!-- INITIAL STATE (shown before user types) -->
+    <div id="search-initial">
+      <p>GoI y: "hoa huong duong", "tho bong", "moc khoa"</p>
+    </div>
+  </div>
+</div>
+
+<style>
+  #search-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 300;
+    display: none;
+    align-items: flex-start;
+    justify-content: center;
+    padding-top: 80px;
+  }
+
+  #search-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(44, 44, 44, 0.6);
+    backdrop-filter: blur(4px);
+  }
+
+  #search-panel {
+    position: relative;
+    z-index: 1;
+    background: var(--color-surface);
+    width: 100%;
+    max-width: 600px;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--color-border);
+    box-shadow: var(--shadow-card);
+    max-height: calc(100vh - 120px);
+    overflow-y: auto;
+    margin: 0 16px;
+  }
+
+  #search-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 24px 0;
+  }
+
+  #search-close {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: var(--color-text-muted);
+    line-height: 1;
+    padding: 4px 8px;
+    border-radius: var(--radius-sm);
+    transition: color var(--transition-base);
+  }
+  #search-close:hover {
+    color: var(--color-text);
+  }
+
+  #search-input-wrapper {
+    padding: 16px 24px;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  #search-input {
+    width: 100%;
+    border: none;
+    outline: none;
+    font-family: var(--font-heading);
+    font-size: 1.4rem;
+    font-style: italic;
+    color: var(--color-text);
+    background: transparent;
+    caret-color: var(--color-primary-dark);
+  }
+
+  #search-input::placeholder {
+    color: var(--color-text-muted);
+    font-weight: 300;
+    font-style: italic;
+  }
+
+  #search-results {
+    padding: 8px 0;
+  }
+
+  #search-empty,
+  #search-initial {
+    padding: 32px 24px;
+    text-align: center;
+    font-family: var(--font-body);
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+    line-height: 1.8;
+  }
+  #search-empty a {
+    color: var(--color-primary-dark);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+</style>
+
+<script lang="ts">
+  import Fuse from 'fuse.js';
+
+  const fuse = new Fuse(PRODUCTS, {
+    keys: [
+      { name: 'name', weight: 0.6 },
+      { name: 'description', weight: 0.3 },
+      { name: 'category', weight: 0.1 },
+    ],
+    threshold: 0.4,
+    includeScore: true,
+    minMatchCharLength: 2,
+  });
+
+  const modal = document.getElementById('search-modal')!;
+  const backdrop = document.getElementById('search-backdrop')!;
+  const closeBtn = document.getElementById('search-close')!;
+  const input = document.getElementById('search-input') as HTMLInputElement;
+  const resultsEl = document.getElementById('search-results')!;
+  const emptyEl = document.getElementById('search-empty')!;
+  const initialEl = document.getElementById('search-initial')!;
+
+  function openSearch(): void {
+    modal.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+    setTimeout(() => input.focus(), 50);
+  }
+
+  function closeSearch(): void {
+    modal.style.display = 'none';
+    document.body.style.overflow = '';
+    input.value = '';
+    resultsEl.innerHTML = '';
+    emptyEl.style.display = 'none';
+    initialEl.style.display = 'block';
+  }
+
+  window.addEventListener('open-search', openSearch);
+  backdrop.addEventListener('click', closeSearch);
+  closeBtn.addEventListener('click', closeSearch);
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeSearch();
+  });
+
+  input.addEventListener('input', () => {
+    const query = input.value.trim();
+
+    if (query.length < 2) {
+      resultsEl.innerHTML = '';
+      emptyEl.style.display = 'none';
+      initialEl.style.display = 'block';
+      return;
+    }
+
+    initialEl.style.display = 'none';
+    const results = fuse.search(query).slice(0, 6);
+
+    if (results.length === 0) {
+      resultsEl.innerHTML = '';
+      emptyEl.style.display = 'block';
+      return;
+    }
+
+    emptyEl.style.display = 'none';
+    resultsEl.innerHTML = '';
+
+    results.forEach(({ item }) => {
+      const el = document.createElement('a');
+      el.href = `/tiemlennhadev/products/${item.id}`;
+      el.className = 'search-result-item';
+      el.style.cssText = `
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        padding: 14px 24px;
+        border-bottom: 1px solid var(--color-border);
+        text-decoration: none;
+        color: inherit;
+        transition: background var(--transition-base);
+      `;
+
+      const swatch = document.createElement('div');
+      const swatchColors: Record<string, string> = {
+        flower: 'var(--color-primary)',
+        keychain: 'var(--color-accent)',
+        animal: '#DDE8E8',
+        other: 'rgba(202,229,230,0.6)',
+      };
+      swatch.style.cssText = `
+        width: 44px;
+        height: 44px;
+        border-radius: var(--radius-sm);
+        background: ${swatchColors[item.category] ?? 'var(--color-primary)'};
+        flex-shrink: 0;
+      `;
+
+      const info = document.createElement('div');
+      info.style.cssText = 'flex: 1; min-width: 0;';
+
+      const name = document.createElement('p');
+      name.textContent = item.name;
+      name.style.cssText = `
+        font-family: var(--font-heading);
+        font-size: 0.95rem;
+        color: var(--color-text);
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      `;
+
+      const meta = document.createElement('p');
+      meta.textContent = `${item.price.toLocaleString('vi-VN')} dong · ${
+        item.inStock ? 'Con hang' : 'Het hang'
+      }`;
+      meta.style.cssText = `
+        font-family: var(--font-body);
+        font-size: 0.75rem;
+        color: var(--color-text-muted);
+        margin-top: 3px;
+      `;
+
+      info.appendChild(name);
+      info.appendChild(meta);
+      el.appendChild(swatch);
+      el.appendChild(info);
+
+      el.addEventListener('mouseenter', () => {
+        el.style.background = 'rgba(202,229,230,0.15)';
+      });
+      el.addEventListener('mouseleave', () => {
+        el.style.background = '';
+      });
+
+      resultsEl.appendChild(el);
+    });
+  });
+</script>

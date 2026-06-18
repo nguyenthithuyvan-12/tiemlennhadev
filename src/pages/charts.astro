@@ -1,0 +1,202 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const pageTitle = 'Thư Viện Chart';
+const pageDescription = 'Thư viện sơ đồ móc len miễn phí và có phí từ Tiệm Len Nhà Dev. Tải về từ Google Drive.';
+
+const chartColors = [
+  'linear-gradient(135deg, #F9B2D7 0%, #CFECF3 100%)',
+  'linear-gradient(135deg, #CFECF3 0%, #DAF9DE 100%)',
+  'linear-gradient(135deg, #DAF9DE 0%, #F6FFDC 100%)',
+  'linear-gradient(135deg, #F6FFDC 0%, #F9B2D7 100%)',
+];
+---
+
+<BaseLayout title={pageTitle} description={pageDescription}>
+  <!-- PAGE HERO BAND -->
+  <section class="relative py-[80px] md:py-[120px] overflow-hidden" style="background: linear-gradient(135deg, #CFECF3 0%, #DAF9DE 50%, #F6FFDC 100%);">
+    <!-- Decorative elements -->
+    <div class="absolute top-10 right-10 w-40 h-40 rounded-full opacity-40" style="background: radial-gradient(circle, #F9B2D7 0%, transparent 70%);"></div>
+    <div class="absolute bottom-10 left-10 w-56 h-56 rounded-full opacity-30" style="background: radial-gradient(circle, #D4869E 0%, transparent 70%);"></div>
+    <div class="absolute top-1/3 left-1/4 w-24 h-24 rounded-full opacity-25" style="background: radial-gradient(circle, #DAF9DE 0%, transparent 70%);"></div>
+    <div class="absolute bottom-1/4 right-1/4 w-32 h-32 rounded-full opacity-30" style="background: radial-gradient(circle, #CFECF3 0%, transparent 70%);"></div>
+
+    <div class="container-base relative z-10">
+      <div class="text-center max-w-3xl mx-auto">
+        <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full mb-6" style="background: #E8487A; box-shadow: 0 4px 15px rgba(232,72,122,0.3);">
+          <span class="block w-2 h-2 rounded-full" style="background: white;"></span>
+          <span class="font-body text-sm font-semibold tracking-wider uppercase text-white">Tài liệu móc len</span>
+        </div>
+
+        <h1 class="font-heading font-[500] leading-[1.2]" style="font-size: clamp(2.2rem, 4.5vw, 3.5rem); color: #2C3E3F; font-style: italic; letter-spacing: -0.02em;">
+          Thư viện Chart
+        </h1>
+        <p class="font-body text-[1.1rem] font-medium leading-relaxed mt-5 max-w-xl mx-auto" style="color: #3D7A7F;">
+          Sơ đồ móc len được soạn thảo tỉ mỉ, có ghi chú tiếng Việt. Tải về miễn phí hoặc mua với giá ưu đãi.
+        </p>
+
+        <!-- Trust Indicators -->
+        <div class="flex flex-wrap items-center justify-center gap-3 sm:gap-4 mt-10">
+          <div class="inline-flex items-center gap-2.5 px-5 py-2.5 rounded-full" style="background: rgba(255,255,255,0.8); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.6);">
+            <svg class="w-5 h-5 flex-shrink-0" style="color: #E8487A;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+            </svg>
+            <span class="font-body text-sm font-medium" style="color: #2C3E3F;">Chart PDF chất lượng cao</span>
+          </div>
+          <div class="inline-flex items-center gap-2.5 px-5 py-2.5 rounded-full" style="background: rgba(255,255,255,0.8); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.6);">
+            <svg class="w-5 h-5 flex-shrink-0" style="color: #3D7A7F;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
+            </svg>
+            <span class="font-body text-sm font-medium" style="color: #2C3E3F;">Google Drive tải dễ dàng</span>
+          </div>
+          <div class="inline-flex items-center gap-2.5 px-5 py-2.5 rounded-full" style="background: rgba(255,255,255,0.8); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.6);">
+            <svg class="w-5 h-5 flex-shrink-0" style="color: #6B8A8C;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+            </svg>
+            <span class="font-body text-sm font-medium" style="color: #2C3E3F;">Cập nhật thường xuyên</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CHART GRID SECTION -->
+  <section class="py-[80px]" style="background-color: #FAFAF8;">
+    <div class="container-base">
+      <div class="text-center mb-12">
+        <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full mb-4" style="background: #F9B2D7; box-shadow: 0 4px 15px rgba(249,178,215,0.3);">
+          <span class="block w-2 h-2 rounded-full" style="background: white;"></span>
+          <span class="font-body text-sm font-semibold tracking-wider uppercase" style="color: white;">Chart có sẵn</span>
+        </div>
+        <h2 class="font-heading font-[500] leading-[1.2]" style="font-size: clamp(1.6rem, 2.8vw, 2.2rem); margin-top: 8px; color: #2C3E3F; font-style: italic; letter-spacing: -0.02em;">
+          Chọn chart bạn yêu thích.
+        </h2>
+      </div>
+
+      <!-- Single Demo Chart Card -->
+      <div class="max-w-md mx-auto">
+        <article 
+          class="rounded-3xl overflow-hidden transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl group"
+          style="background: white; box-shadow: 0 8px 40px rgba(0,0,0,0.1);"
+        >
+          <!-- Image Area -->
+          <div 
+            class="relative w-full h-[480px]"
+            style="background: linear-gradient(135deg, #F9B2D7 0%, #CFECF3 100%);"
+          >
+            <img 
+              src="/tiemlennhadev/images/hoa-huonghuong1.jpg" 
+              alt="Chart Hoa Hướng Dương"
+              class="w-full h-full object-cover"
+            />
+            
+            <!-- Coming Soon Badge -->
+            <div class="absolute top-4 right-4">
+              <span class="inline-block font-body text-[0.7rem] uppercase tracking-[0.1em] font-bold px-4 py-2 rounded-full" style="background: linear-gradient(135deg, #F9B2D7 0%, #E8487A 100%); color: white; box-shadow: 0 4px 15px rgba(232,72,122,0.4);">
+                Coming Soon
+              </span>
+            </div>
+          </div>
+
+          <!-- Content Area -->
+          <div class="p-6 text-center" style="background: linear-gradient(180deg, white 0%, #FFF5F8 100%);">
+            <span class="inline-block font-body text-[0.75rem] uppercase tracking-[0.1em] px-4 py-1.5 rounded-full" style="background: linear-gradient(135deg, #F6FFDC 0%, #DAF9DE 100%); color: #2C3E3F;">
+              Hoa
+            </span>
+
+            <h3 class="font-heading font-[500] text-xl mt-4" style="color: #2C3E3F; font-style: italic;">
+              Chart Hoa Hướng Dương
+            </h3>
+
+            <p class="font-body text-[0.95rem] font-medium leading-[1.7] mt-3" style="color: #5A7A7D;">
+              Sơ đồ móc hoa hướng dương 6 cánh, kèm ghi chú tiếng Việt. Định dạng PDF, in được khổ A4.
+            </p>
+
+            <!-- Coming Soon Notice -->
+            <div class="mt-6 pt-5" style="border-top: 2px dashed #DAF9DE;">
+              <div class="inline-flex items-center gap-3 px-6 py-4 rounded-2xl" style="background: linear-gradient(135deg, rgba(249,178,215,0.2) 0%, rgba(207,236,243,0.2) 100%);">
+                <span style="font-size: 1.5rem;">⏳</span>
+                <div class="text-left">
+                  <span class="font-heading font-[500] block" style="color: #E8487A; font-style: italic;">Đang chuẩn bị</span>
+                  <span class="font-body text-[0.85rem]" style="color: #5A7A7D;">Chart sẽ sớm được cập nhật lên Drive</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW TO USE SECTION -->
+  <section class="relative py-[80px]" style="background: linear-gradient(180deg, #FFFFFF 0%, #F6FFDC 100%);">
+    <!-- Decorative elements -->
+    <div class="absolute left-0 top-1/2 w-32 h-32 rounded-full opacity-20" style="background: radial-gradient(circle, #F9B2D7 0%, transparent 70%); transform: translateY(-50%);"></div>
+    <div class="absolute right-0 top-1/3 w-40 h-40 rounded-full opacity-15" style="background: radial-gradient(circle, #CFECF3 0%, transparent 70%);"></div>
+
+    <div class="container-base relative z-10">
+      <!-- Header -->
+      <div class="text-center mb-12">
+        <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full mb-4" style="background: #CFECF3; box-shadow: 0 4px 15px rgba(61,122,127,0.2);">
+          <span class="block w-2 h-2 rounded-full" style="background: #3D7A7F;"></span>
+          <span class="font-body text-sm font-semibold tracking-wider uppercase" style="color: #3D7A7F;">Hướng dẫn sử dụng</span>
+        </div>
+        <h2 class="font-heading font-[500] leading-[1.2]" style="font-size: clamp(1.6rem, 2.8vw, 2.2rem); margin-top: 8px; color: #2C3E3F; font-style: italic; letter-spacing: -0.02em;">
+          Cách tải và dùng chart
+        </h2>
+      </div>
+
+      <!-- Steps -->
+      <div class="max-w-2xl mx-auto">
+        <!-- Step 1 -->
+        <div class="flex gap-6 p-6 rounded-2xl mb-5 transition-all duration-300 hover:shadow-lg" style="background: white; box-shadow: 0 4px 20px rgba(0,0,0,0.06);">
+          <div class="w-14 h-14 rounded-full flex items-center justify-center flex-shrink-0" style="background: linear-gradient(135deg, #F9B2D7 0%, #E8487A 100%); box-shadow: 0 4px 15px rgba(232,72,122,0.3);">
+            <span class="font-heading font-bold text-lg text-white">01</span>
+          </div>
+          <div class="flex-1">
+            <h3 class="font-heading font-[500] text-lg" style="color: #2C3E3F; font-style: italic;">Nhấn vào chart bạn muốn tải</h3>
+            <p class="font-body text-[0.95rem] font-medium leading-[1.8] mt-2" style="color: #5A7A7D;">
+              Bạn sẽ được chuyển đến Google Drive. Đăng nhập tài khoản Google nếu cần thiết.
+            </p>
+          </div>
+        </div>
+
+        <!-- Step 2 -->
+        <div class="flex gap-6 p-6 rounded-2xl mb-5 transition-all duration-300 hover:shadow-lg" style="background: white; box-shadow: 0 4px 20px rgba(0,0,0,0.06);">
+          <div class="w-14 h-14 rounded-full flex items-center justify-center flex-shrink-0" style="background: linear-gradient(135deg, #CFECF3 0%, #3D7A7F 100%); box-shadow: 0 4px 15px rgba(61,122,127,0.3);">
+            <span class="font-heading font-bold text-lg text-white">02</span>
+          </div>
+          <div class="flex-1">
+            <h3 class="font-heading font-[500] text-lg" style="color: #2C3E3F; font-style: italic;">Nhấn nút tải xuống</h3>
+            <p class="font-body text-[0.95rem] font-medium leading-[1.8] mt-2" style="color: #5A7A7D;">
+              Trên Google Drive, nhấn biểu tượng tải xuống hoặc chuột phải → Tải xuống để lưu file PDF về máy.
+            </p>
+          </div>
+        </div>
+
+        <!-- Step 3 -->
+        <div class="flex gap-6 p-6 rounded-2xl transition-all duration-300 hover:shadow-lg" style="background: white; box-shadow: 0 4px 20px rgba(0,0,0,0.06);">
+          <div class="w-14 h-14 rounded-full flex items-center justify-center flex-shrink-0" style="background: linear-gradient(135deg, #DAF9DE 0%, #6B8A6B 100%); box-shadow: 0 4px 15px rgba(107,138,107,0.3);">
+            <span class="font-heading font-bold text-lg text-white">03</span>
+          </div>
+          <div class="flex-1">
+            <h3 class="font-heading font-[500] text-lg" style="color: #2C3E3F; font-style: italic;">In ra hoặc xem trên thiết bị</h3>
+            <p class="font-body text-[0.95rem] font-medium leading-[1.8] mt-2" style="color: #5A7A7D;">
+              Chart có thể in khổ A4. Khuyến nghị dùng máy tính bảng để xem trong khi móc rất tiện lợi.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- CTA -->
+      <div class="text-center mt-12">
+        <div class="inline-flex items-center gap-3 px-6 py-4 rounded-full" style="background: rgba(255,255,255,0.8); backdrop-filter: blur(10px); border: 2px solid #DAF9DE;">
+          <span style="color: #E8487A; font-size: 1.5rem;">♥</span>
+          <span class="font-body text-[1rem] font-medium" style="color: #2C3E3F;">
+            Nếu cần hỗ trợ, hãy liên hệ với chúng tôi nhé!
+          </span>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

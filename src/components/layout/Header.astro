@@ -1,0 +1,360 @@
+---
+import ThemeToggle from '../ui/ThemeToggle.astro';
+
+const currentPath = Astro.url.pathname;
+
+const navLinks = [
+  { href: '/tiemlennhadev/', label: 'Trang Chủ' },
+  { href: '/tiemlennhadev/products', label: 'Sản Phẩm' },
+  { href: '/tiemlennhadev/blog', label: 'Blog' },
+  { href: '/tiemlennhadev/courses', label: 'Khóa Học' },
+  { href: '/tiemlennhadev/charts', label: 'Thư Viện' },
+];
+
+function isActive(href: string): boolean {
+  if (href === '/tiemlennhadev/') {
+    return currentPath === href || currentPath === '/tiemlennhadev';
+  }
+  return currentPath.startsWith(href);
+}
+---
+
+<header class="sticky top-0 z-50 transition-all duration-300" id="main-header" style="background: rgba(255, 255, 255, 0.15); backdrop-filter: blur(20px) saturate(180%); -webkit-backdrop-filter: blur(20px) saturate(180%); border-bottom: 1px solid rgba(255, 255, 255, 0.2); box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05);">
+  <div class="w-full max-w-[1280px] mx-auto px-6 md:px-10 lg:px-16 h-[65px] md:h-[78px] flex items-center justify-between">
+    <!-- Brand Logo -->
+    <a href="/tiemlennhadev/" class="flex flex-col leading-none">
+      <span class="font-heading text-2xl md:text-3xl font-bold tracking-wide" style="color: #2C3E3F;">
+        Tiệm Len
+      </span>
+      <span class="font-heading text-base md:text-xl font-semibold tracking-[0.2em] uppercase mt-0.5" style="color: #D4869E;">
+        Nhà Dev
+      </span>
+    </a>
+
+    <!-- Desktop Navigation -->
+    <nav class="hidden md:flex items-center gap-8">
+      {navLinks.map((link) => (
+        <a
+          href={link.href}
+          class:list={[
+            'desktop-nav-link font-body text-lg font-medium underline-hover px-4 py-2 rounded-full transition-all duration-300',
+            isActive(link.href) ? 'font-bold' : ''
+          ]}
+          style={isActive(link.href) ? 'color: #fff; background: linear-gradient(135deg, #F9B2D7 0%, #D4869E 100%); box-shadow: 0 4px 15px rgba(212, 134, 158, 0.4);' : 'color: var(--color-text);'}
+        >
+          {link.label}
+        </a>
+      ))}
+    </nav>
+
+    <!-- Desktop CTA -->
+    <div class="hidden md:flex items-center gap-6">
+      <button
+        id="header-search-btn"
+        aria-label="Mở tìm kiếm"
+        style="
+          background: rgba(255, 255, 255, 0.5);
+          backdrop-filter: blur(10px);
+          border: 1px solid rgba(255, 255, 255, 0.6);
+          border-radius: 50px;
+          cursor: pointer;
+          font-family: var(--font-body);
+          font-size: 0.85rem;
+          font-weight: 500;
+          color: var(--color-text);
+          letter-spacing: 0.02em;
+          padding: 10px 20px;
+          transition: all 0.3s ease;
+          display: flex;
+          align-items: center;
+          gap: 8px;
+          box-shadow: 0 4px 15px rgba(212, 134, 158, 0.15);
+        "
+      >
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+        </svg>
+        Tìm kiếm
+        <span style="
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          padding: 2px 8px;
+          background: rgba(212, 134, 158, 0.2);
+          border-radius: 20px;
+          font-size: 0.7rem;
+          font-weight: 600;
+          color: #D4869E;
+        ">/</span>
+      </button>
+    </div>
+
+    <!-- Mobile Hamburger -->
+    <button
+      id="mobile-menu-btn"
+      aria-label="Mở menu"
+      aria-expanded="false"
+      aria-controls="mobile-menu"
+    >
+      <span class="hamburger-line" id="ham-line-1"></span>
+      <span class="hamburger-line" id="ham-line-2"></span>
+      <span class="hamburger-line" id="ham-line-3"></span>
+    </button>
+  </div>
+
+  <!-- Mobile Menu -->
+  <nav
+    id="mobile-menu"
+    aria-label="Menu điều hướng"
+    aria-hidden="true"
+  >
+    <div id="mobile-menu-inner">
+      <!-- Nav links -->
+      <ul id="mobile-nav-list">
+        <li><a href="/tiemlennhadev/" class="mobile-nav-link">Trang Chủ</a></li>
+        <li><a href="/tiemlennhadev/products" class="mobile-nav-link">Sản Phẩm</a></li>
+        <li><a href="/tiemlennhadev/blog" class="mobile-nav-link">Blog</a></li>
+        <li><a href="/tiemlennhadev/courses" class="mobile-nav-link">Khóa Học</a></li>
+        <li><a href="/tiemlennhadev/charts" class="mobile-nav-link">Thư Viện</a></li>
+      </ul>
+
+      <!-- Divider -->
+      <div style="height:1px; background:var(--color-border); margin:8px 24px;"></div>
+
+      <!-- Bottom actions -->
+      <div id="mobile-menu-actions">
+        <a href="#" target="_blank" rel="noopener noreferrer" class="mobile-action-link">
+          Liên hệ Zalo
+        </a>
+        <a href="#" target="_blank" rel="noopener noreferrer" class="mobile-action-link">
+          Messenger
+        </a>
+      </div>
+    </div>
+  </nav>
+</header>
+
+<style>
+  /* Hamburger button */
+  #mobile-menu-btn {
+    display: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 8px;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    width: 36px;
+    height: 36px;
+  }
+
+  .hamburger-line {
+    display: block;
+    width: 22px;
+    height: 1.5px;
+    background: var(--color-text);
+    border-radius: 1px;
+    transform-origin: center;
+    transition:
+      transform 300ms ease,
+      opacity 300ms ease,
+      width 300ms ease;
+  }
+
+  /* Animated X state when menu is open */
+  #mobile-menu-btn[aria-expanded="true"] #ham-line-1 {
+    transform: translateY(6.5px) rotate(45deg);
+  }
+  #mobile-menu-btn[aria-expanded="true"] #ham-line-2 {
+    opacity: 0;
+    width: 0;
+  }
+  #mobile-menu-btn[aria-expanded="true"] #ham-line-3 {
+    transform: translateY(-6.5px) rotate(-45deg);
+  }
+
+  @media (max-width: 768px) {
+    #mobile-menu-btn {
+      display: flex;
+    }
+  }
+
+  /* Mobile menu panel */
+  #mobile-menu {
+    position: fixed;
+    top: 65px;
+    left: 0;
+    right: 0;
+    background: var(--color-background);
+    border-bottom: 1px solid var(--color-border);
+    z-index: 40;
+    overflow: hidden;
+    max-height: 0;
+    transition: max-height 350ms cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  #mobile-menu.is-open {
+    max-height: 420px;
+  }
+
+  #mobile-menu-inner {
+    padding: 8px 0 24px;
+  }
+
+  #mobile-nav-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  /* Desktop nav links */
+  .desktop-nav-link {
+    position: relative;
+    padding: 9px 18px;
+    border-radius: 999px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .desktop-nav-link:hover,
+  .desktop-nav-link.active {
+    background: linear-gradient(135deg, #F9B2D7 0%, #D4869E 100%);
+    color: #ffffff !important;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(212, 134, 158, 0.35);
+  }
+
+  /* Mobile nav links */
+  .mobile-nav-link {
+    display: flex;
+    align-items: center;
+    padding: 14px 24px;
+    font-family: var(--font-heading);
+    font-size: 1rem;
+    font-style: italic;
+    color: var(--color-text);
+    text-decoration: none;
+    border-bottom: 1px solid var(--color-border);
+    transition: all 0.3s ease;
+  }
+  .mobile-nav-link:hover,
+  .mobile-nav-link.is-active {
+    background: linear-gradient(135deg, rgba(249, 178, 215, 0.2) 0%, rgba(212, 134, 158, 0.15) 100%);
+    color: var(--color-primary-dark);
+    padding-left: 32px;
+  }
+  .mobile-nav-link.is-active {
+    font-weight: 500;
+  }
+
+  #mobile-menu-actions {
+    display: flex;
+    gap: 12px;
+    padding: 16px 24px 0;
+  }
+
+  .mobile-action-link {
+    flex: 1;
+    text-align: center;
+    padding: 10px;
+    font-family: var(--font-body);
+    font-size: 0.8rem;
+    letter-spacing: 0.05em;
+    color: var(--color-primary-dark);
+    border: 1px solid var(--color-primary-dark);
+    border-radius: var(--radius-md);
+    text-decoration: none;
+    transition: background var(--transition-base), color var(--transition-base);
+  }
+  .mobile-action-link:hover {
+    background: var(--color-primary-dark);
+    color: #FAFAF8;
+  }
+
+  /* Hide menu panel on desktop */
+  @media (min-width: 769px) {
+    #mobile-menu {
+      display: none;
+    }
+  }
+</style>
+
+<script>
+  // --- SCROLL SHADOW ---
+  const header = document.getElementById('main-header');
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 10) {
+      header?.classList.add('shadow-soft');
+    } else {
+      header?.classList.remove('shadow-soft');
+    }
+  });
+
+  // --- MOBILE MENU ---
+  const menuBtn = document.getElementById('mobile-menu-btn');
+  const menu = document.getElementById('mobile-menu');
+  const navLinks = document.querySelectorAll('.mobile-nav-link');
+
+  function openMenu() {
+    menu.classList.add('is-open');
+    menuBtn.setAttribute('aria-expanded', 'true');
+    menu.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeMenu() {
+    menu.classList.remove('is-open');
+    menuBtn.setAttribute('aria-expanded', 'false');
+    menu.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+  }
+
+  menuBtn.addEventListener('click', () => {
+    const isOpen = menu.classList.contains('is-open');
+    isOpen ? closeMenu() : openMenu();
+  });
+
+  navLinks.forEach(link => {
+    link.addEventListener('click', closeMenu);
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeMenu();
+  });
+
+  // --- ACTIVE LINK DETECTION ---
+  function isHomePage(path) {
+    return path === '/' || path === '/tiemlennhadev' || path === '/tiemlennhadev/' || path === '' || path === '/tiemlennhadev/index';
+  }
+
+  const currentPath = window.location.pathname;
+  const allNavLinks = document.querySelectorAll('.desktop-nav-link, .mobile-nav-link');
+  
+  allNavLinks.forEach(link => {
+    const href = link.getAttribute('href') || '';
+    
+    if (isHomePage(href)) {
+      if (isHomePage(currentPath)) {
+        link.classList.add('active', 'is-active');
+      }
+    } else {
+      if (currentPath.startsWith(href)) {
+        link.classList.add('active', 'is-active');
+      }
+    }
+  });
+
+  // --- SEARCH TRIGGER ---
+  const searchBtn = document.getElementById('header-search-btn');
+  if (searchBtn) {
+    searchBtn.addEventListener('click', () => {
+      window.dispatchEvent(new CustomEvent('open-search'));
+    });
+  }
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === '/' && document.activeElement?.tagName !== 'INPUT') {
+      e.preventDefault();
+      window.dispatchEvent(new CustomEvent('open-search'));
+    }
+  });
+</script>
