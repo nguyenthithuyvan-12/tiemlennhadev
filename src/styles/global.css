@@ -149,3 +149,23 @@
     max-width: 1280px;
   }
 }
+
+/* ===== MOBILE GLOBAL FIXES ===== */
+@media (max-width: 768px) {
+  /* Tránh overflow ngang */
+  body {
+    overflow-x: hidden;
+  }
+
+  /* Container padding trên mobile */
+  .container-base {
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+  }
+
+  /* Section padding trên mobile */
+  section {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+}
