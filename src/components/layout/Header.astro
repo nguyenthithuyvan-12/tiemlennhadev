@@ -1,6 +1,4 @@
 ---
-import ThemeToggle from '../ui/ThemeToggle.astro';
-
 const currentPath = Astro.url.pathname;
 
 const navLinks = [
@@ -89,117 +87,149 @@ function isActive(href: string): boolean {
       </button>
     </div>
 
-    <!-- Mobile Hamburger -->
+    <!-- Mobile Hamburger Button -->
     <button
       id="mobile-menu-btn"
+      class="mobile-hamburger"
       aria-label="Mở menu"
       aria-expanded="false"
-      aria-controls="mobile-menu"
+      aria-controls="mobile-menu-overlay"
     >
-      <span class="hamburger-line" id="ham-line-1"></span>
-      <span class="hamburger-line" id="ham-line-2"></span>
-      <span class="hamburger-line" id="ham-line-3"></span>
+      <span class="hamburger-line"></span>
+      <span class="hamburger-line"></span>
+      <span class="hamburger-line"></span>
     </button>
   </div>
-
-  <!-- Mobile Menu -->
-  <nav
-    id="mobile-menu"
-    aria-label="Menu điều hướng"
-    aria-hidden="true"
-  >
-    <div id="mobile-menu-inner">
-      <!-- Nav links -->
-      <ul id="mobile-nav-list">
-        <li><a href="/tiemlennhadev/" class="mobile-nav-link">Trang Chủ</a></li>
-        <li><a href="/tiemlennhadev/products" class="mobile-nav-link">Sản Phẩm</a></li>
-        <li><a href="/tiemlennhadev/blog" class="mobile-nav-link">Blog</a></li>
-        <li><a href="/tiemlennhadev/courses" class="mobile-nav-link">Khóa Học</a></li>
-        <li><a href="/tiemlennhadev/charts" class="mobile-nav-link">Thư Viện</a></li>
-      </ul>
-
-      <!-- Divider -->
-      <div style="height:1px; background:var(--color-border); margin:8px 24px;"></div>
-
-      <!-- Bottom actions -->
-      <div id="mobile-menu-actions">
-        <a href="#" target="_blank" rel="noopener noreferrer" class="mobile-action-link">
-          Liên hệ Zalo
-        </a>
-        <a href="#" target="_blank" rel="noopener noreferrer" class="mobile-action-link">
-          Messenger
-        </a>
-      </div>
-    </div>
-  </nav>
 </header>
 
+<!-- Mobile Menu Overlay -->
+<div id="mobile-menu-overlay" class="mobile-overlay" aria-hidden="true">
+  <nav id="mobile-menu-panel" class="mobile-panel" aria-label="Menu điều hướng">
+    <!-- Nav links -->
+    <ul id="mobile-nav-list">
+      {navLinks.map((link) => (
+        <li>
+          <a href={link.href} class="mobile-nav-link">{link.label}</a>
+        </li>
+      ))}
+    </ul>
+
+    <!-- Divider -->
+    <div class="mobile-divider"></div>
+
+    <!-- Bottom actions -->
+    <div id="mobile-menu-actions">
+      <a href="#" target="_blank" rel="noopener noreferrer" class="mobile-action-link">
+        Liên hệ Zalo
+      </a>
+      <a href="#" target="_blank" rel="noopener noreferrer" class="mobile-action-link">
+        Messenger
+      </a>
+    </div>
+  </nav>
+</div>
+
 <style>
-  /* Hamburger button */
-  #mobile-menu-btn {
+  /* ========================================
+     HAMBURGER BUTTON - Always visible on mobile
+     ======================================== */
+  .mobile-hamburger {
     display: none;
-    background: none;
-    border: none;
+    background: rgba(255, 255, 255, 0.5);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    border-radius: 8px;
     cursor: pointer;
-    padding: 8px;
+    padding: 10px;
     flex-direction: column;
     justify-content: center;
+    align-items: center;
     gap: 5px;
-    width: 36px;
-    height: 36px;
+    width: 44px;
+    height: 44px;
+    transition: all 0.3s ease;
+  }
+
+  .mobile-hamburger:hover {
+    background: rgba(255, 255, 255, 0.8);
+    border-color: rgba(212, 134, 158, 0.5);
+  }
+
+  .mobile-hamburger:active {
+    transform: scale(0.95);
   }
 
   .hamburger-line {
     display: block;
-    width: 22px;
-    height: 1.5px;
+    width: 20px;
+    height: 2px;
     background: var(--color-text);
-    border-radius: 1px;
+    border-radius: 2px;
     transform-origin: center;
     transition:
       transform 300ms ease,
-      opacity 300ms ease,
-      width 300ms ease;
+      opacity 300ms ease;
   }
 
   /* Animated X state when menu is open */
-  #mobile-menu-btn[aria-expanded="true"] #ham-line-1 {
-    transform: translateY(6.5px) rotate(45deg);
+  .mobile-hamburger[aria-expanded="true"] .hamburger-line:nth-child(1) {
+    transform: translateY(7px) rotate(45deg);
   }
-  #mobile-menu-btn[aria-expanded="true"] #ham-line-2 {
+  .mobile-hamburger[aria-expanded="true"] .hamburger-line:nth-child(2) {
     opacity: 0;
-    width: 0;
+    transform: scaleX(0);
   }
-  #mobile-menu-btn[aria-expanded="true"] #ham-line-3 {
-    transform: translateY(-6.5px) rotate(-45deg);
+  .mobile-hamburger[aria-expanded="true"] .hamburger-line:nth-child(3) {
+    transform: translateY(-7px) rotate(-45deg);
   }
 
   @media (max-width: 768px) {
-    #mobile-menu-btn {
+    .mobile-hamburger {
       display: flex;
     }
   }
 
-  /* Mobile menu panel */
-  #mobile-menu {
+  /* ========================================
+     MOBILE OVERLAY - Full screen backdrop
+     ======================================== */
+  .mobile-overlay {
     position: fixed;
-    top: 60px;
+    top: 0;
     left: 0;
     right: 0;
-    background: var(--color-background);
-    border-bottom: 1px solid var(--color-border);
-    z-index: 40;
-    overflow: hidden;
-    max-height: 0;
-    transition: max-height 350ms cubic-bezier(0.4, 0, 0.2, 1);
+    bottom: 0;
+    background: rgba(0, 0, 0, 0);
+    z-index: 45;
+    pointer-events: none;
+    transition: background 300ms ease;
   }
 
-  #mobile-menu.is-open {
-    max-height: 420px;
+  .mobile-overlay.is-open {
+    pointer-events: auto;
+    background: rgba(0, 0, 0, 0.5);
   }
 
-  #mobile-menu-inner {
-    padding: 8px 0 24px;
+  /* ========================================
+     MOBILE PANEL - Slide from right
+     ======================================== */
+  .mobile-panel {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 280px;
+    max-width: 85vw;
+    height: 100vh;
+    background: var(--color-surface);
+    box-shadow: -4px 0 20px rgba(0, 0, 0, 0.15);
+    transform: translateX(100%);
+    transition: transform 300ms cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 50;
+    overflow-y: auto;
+    padding-top: 20px;
+  }
+
+  .mobile-overlay.is-open .mobile-panel {
+    transform: translateX(0);
   }
 
   #mobile-nav-list {
@@ -208,42 +238,35 @@ function isActive(href: string): boolean {
     padding: 0;
   }
 
-  /* Desktop nav links */
-  .desktop-nav-link {
-    position: relative;
-    padding: 9px 18px;
-    border-radius: 999px;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  }
-  .desktop-nav-link:hover,
-  .desktop-nav-link.active {
-    background: linear-gradient(135deg, #F9B2D7 0%, #D4869E 100%);
-    color: #ffffff !important;
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(212, 134, 158, 0.35);
-  }
-
   /* Mobile nav links */
   .mobile-nav-link {
     display: flex;
     align-items: center;
-    padding: 14px 24px;
+    padding: 16px 24px;
     font-family: var(--font-heading);
-    font-size: 1rem;
+    font-size: 1.1rem;
     font-style: italic;
     color: var(--color-text);
     text-decoration: none;
     border-bottom: 1px solid var(--color-border);
     transition: all 0.3s ease;
   }
+
   .mobile-nav-link:hover,
   .mobile-nav-link.is-active {
     background: linear-gradient(135deg, rgba(249, 178, 215, 0.2) 0%, rgba(212, 134, 158, 0.15) 100%);
     color: var(--color-primary-dark);
     padding-left: 32px;
   }
+
   .mobile-nav-link.is-active {
-    font-weight: 500;
+    font-weight: 600;
+  }
+
+  .mobile-divider {
+    height: 1px;
+    background: var(--color-border);
+    margin: 8px 24px;
   }
 
   #mobile-menu-actions {
@@ -255,31 +278,110 @@ function isActive(href: string): boolean {
   .mobile-action-link {
     flex: 1;
     text-align: center;
-    padding: 10px;
+    padding: 12px;
     font-family: var(--font-body);
-    font-size: 0.8rem;
+    font-size: 0.85rem;
+    font-weight: 500;
     letter-spacing: 0.05em;
     color: var(--color-primary-dark);
     border: 1px solid var(--color-primary-dark);
     border-radius: var(--radius-md);
     text-decoration: none;
-    transition: background var(--transition-base), color var(--transition-base);
-  }
-  .mobile-action-link:hover {
-    background: var(--color-primary-dark);
-    color: #FAFAF8;
+    transition: background 200ms ease, color 200ms ease;
   }
 
-  /* Hide menu panel on desktop */
-  @media (min-width: 769px) {
-    #mobile-menu {
-      display: none;
-    }
+  .mobile-action-link:hover {
+    background: var(--color-primary-dark);
+    color: var(--color-surface);
+  }
+
+  /* Desktop nav links */
+  .desktop-nav-link {
+    position: relative;
+    padding: 9px 18px;
+    border-radius: 999px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .desktop-nav-link:hover,
+  .desktop-nav-link.active {
+    background: linear-gradient(135deg, #F9B2D7 0%, #D4869E 100%);
+    color: #ffffff !important;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(212, 134, 158, 0.35);
   }
 </style>
 
 <script>
-  // --- SCROLL SHADOW ---
+  // ========================================
+  // MOBILE MENU LOGIC
+  // ========================================
+  const menuBtn = document.getElementById('mobile-menu-btn');
+  const overlay = document.getElementById('mobile-menu-overlay');
+  const panel = document.getElementById('mobile-menu-panel');
+  const navLinks = document.querySelectorAll('.mobile-nav-link');
+
+  let isMenuOpen = false;
+
+  function openMenu() {
+    isMenuOpen = true;
+    overlay?.classList.add('is-open');
+    overlay?.setAttribute('aria-hidden', 'false');
+    menuBtn?.setAttribute('aria-expanded', 'true');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeMenu() {
+    isMenuOpen = false;
+    overlay?.classList.remove('is-open');
+    overlay?.setAttribute('aria-hidden', 'true');
+    menuBtn?.setAttribute('aria-expanded', 'false');
+    document.body.style.overflow = '';
+  }
+
+  function toggleMenu() {
+    isMenuOpen ? closeMenu() : openMenu();
+  }
+
+  // Toggle menu on button click
+  menuBtn?.addEventListener('click', (e) => {
+    e.stopPropagation();
+    toggleMenu();
+  });
+
+  // Close menu when clicking on overlay (outside panel)
+  overlay?.addEventListener('click', (e) => {
+    // Only close if clicking directly on overlay, not panel
+    if (e.target === overlay) {
+      closeMenu();
+    }
+  });
+
+  // Close menu when clicking nav links
+  navLinks.forEach(link => {
+    link.addEventListener('click', () => {
+      closeMenu();
+    });
+  });
+
+  // Close menu when pressing Escape
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && isMenuOpen) {
+      closeMenu();
+      menuBtn?.focus(); // Return focus to hamburger button
+    }
+  });
+
+  // Close menu when window resizes to desktop
+  window.addEventListener('resize', () => {
+    if (window.innerWidth > 768 && isMenuOpen) {
+      closeMenu();
+    }
+  });
+
+  // ========================================
+  // SCROLL SHADOW
+  // ========================================
   const header = document.getElementById('main-header');
   window.addEventListener('scroll', () => {
     if (window.scrollY > 10) {
@@ -289,49 +391,19 @@ function isActive(href: string): boolean {
     }
   });
 
-  // --- MOBILE MENU ---
-  const menuBtn = document.getElementById('mobile-menu-btn');
-  const menu = document.getElementById('mobile-menu');
-  const navLinks = document.querySelectorAll('.mobile-nav-link');
-
-  function openMenu() {
-    menu.classList.add('is-open');
-    menuBtn.setAttribute('aria-expanded', 'true');
-    menu.setAttribute('aria-hidden', 'false');
-    document.body.style.overflow = 'hidden';
-  }
-
-  function closeMenu() {
-    menu.classList.remove('is-open');
-    menuBtn.setAttribute('aria-expanded', 'false');
-    menu.setAttribute('aria-hidden', 'true');
-    document.body.style.overflow = '';
-  }
-
-  menuBtn.addEventListener('click', () => {
-    const isOpen = menu.classList.contains('is-open');
-    isOpen ? closeMenu() : openMenu();
-  });
-
-  navLinks.forEach(link => {
-    link.addEventListener('click', closeMenu);
-  });
-
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') closeMenu();
-  });
-
-  // --- ACTIVE LINK DETECTION ---
-  function isHomePage(path) {
+  // ========================================
+  // ACTIVE LINK DETECTION
+  // ========================================
+  function isHomePage(path: string): boolean {
     return path === '/' || path === '/tiemlennhadev' || path === '/tiemlennhadev/' || path === '' || path === '/tiemlennhadev/index';
   }
 
   const currentPath = window.location.pathname;
   const allNavLinks = document.querySelectorAll('.desktop-nav-link, .mobile-nav-link');
-  
+
   allNavLinks.forEach(link => {
     const href = link.getAttribute('href') || '';
-    
+
     if (isHomePage(href)) {
       if (isHomePage(currentPath)) {
         link.classList.add('active', 'is-active');
@@ -343,7 +415,9 @@ function isActive(href: string): boolean {
     }
   });
 
-  // --- SEARCH TRIGGER ---
+  // ========================================
+  // SEARCH TRIGGER
+  // ========================================
   const searchBtn = document.getElementById('header-search-btn');
   if (searchBtn) {
     searchBtn.addEventListener('click', () => {
