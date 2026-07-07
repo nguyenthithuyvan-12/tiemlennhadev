@@ -290,6 +290,8 @@ function isActive(href: string): boolean {
       background: #D4869E;
       box-shadow: 0 2px 8px rgba(212, 134, 158, 0.4);
       transition: all 0.2s ease;
+      z-index: 200;
+      position: relative;
     }
 
     .mobile-hamburger:hover {
@@ -311,8 +313,14 @@ function isActive(href: string): boolean {
       background: #2C3E3F;
     }
 
-    /* Menu panel - SOLID white */
+    /* Menu overlay - HIGH z-index on mobile */
+    .mobile-overlay {
+      z-index: 150;
+    }
+
+    /* Menu panel - HIGH z-index on mobile */
     .mobile-panel {
+      z-index: 200;
       border-left: 1px solid #e5e5e5;
     }
   }
