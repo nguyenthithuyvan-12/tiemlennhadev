@@ -6,9 +6,11 @@ const pageDescription = 'Khám phá các sản phẩm len handmade của Tiệm 
 
 const categories = [
   { value: 'all', label: 'Tất Cả Sản Phẩm', emoji: '✨' },
-  { value: 'hoa-le', label: 'Hoa Len', emoji: '🌸' },
-  { value: 'phu-kien', label: 'Thú Len - Móc Khóa', emoji: '🎀' },
-  { value: 'bo-hoa', label: 'Bó Hoa Len - Giỏ Hoa', emoji: '💐' },
+  { value: 'hoa-le', label: 'Hoa len', emoji: '🌸' },
+  { value: 'thu-len', label: 'Thú len', emoji: '🧸' },
+  { value: 'moc-khoa', label: 'Móc khoá', emoji: '🔑' },
+  { value: 'mau-boa-hoa', label: 'Mẫu bó hoa', emoji: '💐' },
+  { value: 'gio-hoa', label: 'Giỏ hoa', emoji: '🧺' },
 ];
 
 const products = [
@@ -42,7 +44,7 @@ const products = [
   {
     id: 'sp-004',
     name: 'Bó Hoa Len Hỗn Hợp',
-    category: 'bo-hoa',
+    category: 'mau-boa-hoa',
     image: '/tiemlennhadev/images/Hoa-HonHop2.jpg',
     description: 'Bó hoa gồm nhiều loại hoa len kết hợp hài hòa, đóng gói quà tặng sang trọng.',
     badge: 'Phổ biến',
@@ -51,7 +53,7 @@ const products = [
   {
     id: 'sp-005',
     name: 'Bó Hoa Hồng Len',
-    category: 'bo-hoa',
+    category: 'mau-boa-hoa',
     image: '/tiemlennhadev/images/hoa-hong-1.jpg',
     description: 'Bó hoa hồng len đôi lãng mạn, hoàn hảo cho dịp kỷ niệm và tặng quà.',
     badge: 'Bán Chạy',
@@ -60,7 +62,7 @@ const products = [
   {
     id: 'sp-006',
     name: 'Móc Khóa Mèo Nhung Gấu',
-    category: 'phu-kien',
+    category: 'moc-khoa',
     image: '/tiemlennhadev/images/meo-ngotngao1.jpg',
     description: 'Móc khóa hình gấu bông len mềm mại, nhỏ gọn xinh xắn. Đáng yêu và dễ thương.',
     badge: '',
@@ -69,7 +71,7 @@ const products = [
   {
     id: 'sp-007',
     name: 'Móc Khóa 5 Cánh Dây Tây',
-    category: 'phu-kien',
+    category: 'thu-len',
     image: '/tiemlennhadev/images/moc-5canhdaytay.jpg',
     description: 'Thỏ tai dài móc len đáng iu, có nhiều màu để bạn lựa chọn theo sở thích.',
     badge: 'Mới',
@@ -78,7 +80,7 @@ const products = [
   {
     id: 'sp-008',
     name: 'Hoa Hỗn Hợp',
-    category: 'bo-hoa',
+    category: 'mau-boa-hoa',
     image: '/tiemlennhadev/images/hoahonhop.jpg',
     description: 'Bộ set gồm nhiều loại hoa len mini, thích hợp làm phụ kiện trang trí.',
     badge: '',
@@ -87,7 +89,7 @@ const products = [
   {
     id: 'sp-009',
     name: 'Móc Khóa 5 Cánh',
-    category: 'phu-kien',
+    category: 'moc-khoa',
     image: '/tiemlennhadev/images/Phukien-khoa5canh.jpg',
     description: 'Móc khóa len 5 cánh độc đáo, nhiều màu sắc.',
     badge: '',
@@ -96,7 +98,7 @@ const products = [
   {
     id: 'sp-010',
     name: 'Móc Khóa Trái Tym',
-    category: 'phu-kien',
+    category: 'moc-khoa',
     image: '/tiemlennhadev/images/moc-traitym.jpg',
     description: 'Móc khóa hình trái tim tym dễ thương, màu hồng đáng yêu.',
     badge: '',
@@ -105,7 +107,7 @@ const products = [
   {
     id: 'sp-011',
     name: 'Móc Khóa Ếch và Vịt',
-    category: 'phu-kien',
+    category: 'moc-khoa',
     image: '/tiemlennhadev/images/moc-khoa-vit1.jpg',
     description: 'Bộ móc khóa ếch và vịt cute, thích hợp làm quà.',
     badge: '',
@@ -114,9 +116,45 @@ const products = [
   {
     id: 'sp-012',
     name: 'Móc Khóa Thỏ Miffy',
-    category: 'phu-kien',
+    category: 'moc-khoa',
     image: '/tiemlennhadev/images/tho-miffy.jpg',
     description: 'Móc khóa thỏ miffy xinh xắn, phong cách Nhật Bản.',
+    badge: '',
+    color: '#F6FFDC',
+  },
+  {
+    id: 'sp-013',
+    name: 'Hoa Cúc Zinnia',
+    category: 'hoa-le',
+    image: '/tiemlennhadev/images/hoa-cuczima.jpg',
+    description: 'Hoa cúc zinnia len handmade, màu sắc tươi sáng, thích hợp trang trí hoặc làm quà.',
+    badge: '',
+    color: '#F9B2D7',
+  },
+  {
+    id: 'sp-014',
+    name: 'Hoa Dầu Tung',
+    category: 'hoa-le',
+    image: '/tiemlennhadev/images/hoa-dautung.jpg',
+    description: 'Hoa dầu tung len handmade, vẻ đẹp nhẹ nhàng và tinh tế cho không gian.',
+    badge: '',
+    color: '#CFECF3',
+  },
+  {
+    id: 'sp-015',
+    name: 'Hoa Đồng Tiền',
+    category: 'hoa-le',
+    image: '/tiemlennhadev/images/hoa-dongtien.jpg',
+    description: 'Hoa đồng tiền len handmade, biểu tượng của may mắn và tình bạn.',
+    badge: '',
+    color: '#DAF9DE',
+  },
+  {
+    id: 'sp-016',
+    name: 'Hoa Linh Lan',
+    category: 'hoa-le',
+    image: '/tiemlennhadev/images/hoa-linhlan.jpg',
+    description: 'Hoa linh lan len handmade, thơm ngát và thanh khiết, thích hợp làm quà tặng.',
     badge: '',
     color: '#F6FFDC',
   },
